@@ -11,3 +11,10 @@ print (dd)
 data = requests.get(BASE + "/coredns/readiness")
 dd = data.json()
 print (dd)
+
+data = requests.get(BASE + "/grafana/health")
+dd = data.json()
+print (dd)
+
+data = requests.get(BASE + "/influxb/health")
+print (data)

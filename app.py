@@ -33,8 +33,25 @@ class coredns_ready(Resource):
         self.ee = str(self.res.status_code)
         return {"data":self.ee}
 
+class csp_grafana(Resource):
+    def get(self):
+        self.url = "http://15.236.19.165:30003"
+        self.res = requests.get(self.url)
+        self.ee = str(self.res.status_code)
+        return {"data":self.ee}
+
+class influxdb(Resource):
+    def get(self):
+        self.url = "http://15.236.19.165:30005/ping?wait_for_leader=30s"
+        self.res = requests.get(self.url)
+        self.ee = str(self.res.status_code)
+        return {"data":self.ee}
+
+
 api.add_resource(coredns, "/coredns/health")
 api.add_resource(coredns_ready, "/coredns/readiness")
+api.add_resource(csp_grafana, "/grafana/health")
+api.add_resource(influxdb, "/influxdb/health")
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0")
