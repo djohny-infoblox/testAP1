@@ -1,5 +1,9 @@
 from flask import Flask
 from flask_restful import Api, Resource
+from influxdb import InfluxDBClient
+import time
+import datetime
+import requests
 
 app = Flask(__name__)
 api = Api(app)
@@ -9,14 +13,28 @@ names = {
          "dhan":{"age":144,"place":"zzz"},
          }
 
-class helloworld(Resource):
-    def get(self,name):
-        return names[name]
-    def post(self):
-        return {"data" : "hello poasdsdsado"}
+# class helloworld(Resource):
+#     def get(self,name):
+#         return names[name]
+#     def post(self):
+#         return {"data" : "hello poasdsdsado"}
+        
+class coredns(Resource):
+    def get(self):
+        self.url = "http://15.236.19.165:8080/health"
+        self.res = requests.get(self.url)
+        self.ee = str(self.res.status_code)
+        return {"data":self.ee}
 
+class coredns_ready(Resource):
+    def get(self):
+        self.url = "http://15.236.19.165:8181/ready"
+        self.res = requests.get(self.url)
+        self.ee = str(self.res.status_code)
+        return {"data":self.ee}
 
-api.add_resource(helloworld, "/hello/<string:name>")
+api.add_resource(coredns, "/coredns/health")
+api.add_resource(coredns_ready, "/coredns/readiness")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host = "0.0.0.0")
