@@ -16,5 +16,6 @@ data = requests.get(BASE + "/grafana/health")
 dd = data.json()
 print (dd)
 
-data = requests.get(BASE + "/influxb/health")
-print (data)
+data = requests.get(BASE + "/influxdb/health")
+dd = data.json()
+print (dd)
