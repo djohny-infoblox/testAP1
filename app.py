@@ -7,38 +7,49 @@ import requests
 app = Flask(__name__)
 api = Api(app)
 
+# names = {
+#          "tim":{"age":12,"place":"dfsdf"},
+#          "dhan":{"age":144,"place":"zzz"},
+#          }
+
+# class helloworld(Resource):
+#     def get(self,name):
+#         return names[name]
+#     def post(self):
+#         return {"data" : "hello poasdsdsado"}
+
       
 class coredns(Resource):
     def get(self):
-        self.url = "http://15.236.19.165:8080/health"
+        self.url = "http://coredns.cored.svc.cluster.local:8080/health"
         self.res = requests.get(self.url)
         self.ee = str(self.res.status_code)
         return {"message":self.ee}
 
 class coredns_ready(Resource):
     def get(self):
-        self.url = "http://15.236.19.165:8181/ready"
+        self.url = "http://coredns.cored.svc.cluster.local:8181/ready"
         self.res = requests.get(self.url)
         self.ee = str(self.res.status_code)
         return {"message":self.ee}
 
 class csp_grafana(Resource):
     def get(self):
-        self.url = "http://15.236.19.165:30003"
+        self.url = "http://grafana.csp.svc.cluster.local:3000"
         self.res = requests.get(self.url)
         self.ee = str(self.res.status_code)
         return {"message":self.ee}
 
 class db(Resource):
     def get(self):
-        self.url = "http://15.236.19.165:30005/ping?wait_for_leader=30s"
+        self.url = "http://influxdb.influxdatabase.svc.cluster.local:8086/ping?wait_for_leader=30s"
         self.res = requests.head(self.url)
         self.ee = str(self.res.status_code)
         return {"message":self.ee}
 
 class firefox1(Resource):
     def get(self):
-        self.url = "http://15.236.19.165:30004/wd/hub/status"
+        self.url = "http://firefoxs.firefoxd.svc.cluster.local:4444/wd/hub/status"
         self.res = requests.get(self.url)
         self.ee = str(self.res.status_code)
         return {"message":self.ee}
